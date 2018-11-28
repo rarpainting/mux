@@ -143,8 +143,8 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	var handler http.Handler
 	if r.Match(req, &match) {
 		handler = match.Handler
-		req = setVars(req, match.Vars)
-		req = setCurrentRoute(req, match.Route)
+		*req = *setVars(req, match.Vars)
+		*req = *setCurrentRoute(req, match.Route)
 	}
 
 	if handler == nil && match.MatchErr == ErrMethodMismatch {
